@@ -41,17 +41,20 @@ function displayTemperature(response) {
   );
   iconElement.setAttribute("alt", response.data.condition.description);
 }
-
-function search(event) {
-  event.preventDefault();
-  let cityInputElement = document.querySelector("city-input");
-  console.log(cityInputElement);
+function search(city) {
+  let apikey = "bbaea6o6503ffbf53tac053a514b1a25";
+  let apiurl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apikey}&units=metric`;
+  axios.get(apiurl).then(displayTemperature);
 }
 
-let apikey = "bbaea6o6503ffbf53tac053a514b1a25";
-let city = "Canberra";
-let apiurl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apikey}&units=metric`;
-axios.get(apiurl).then(displayTemperature);
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  console.log(cityInputElement.value);
+  //search(cityInputElement);
+}
+
+search("Canberra");
 
 let form = document.querySelector("#searchform");
-form.addEventListener("submit", search);
+form.addEventListener("submit", handleSubmit);
